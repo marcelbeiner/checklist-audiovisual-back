@@ -1,5 +1,6 @@
 from model import Base
-
+from sqlalchemy import Column, String, Integer, DateTime, Float
+from sqlalchemy.orm import relationship
 
 
 class Checklist(Base):
@@ -11,11 +12,11 @@ class Checklist(Base):
     serial_number = Column(String, unique = True)
     observacao = Column(String)
     
-    def __init__(self, nome:str, valor:float, serial_number:str, observacao:str)
+    def __init__(self, nome:str, valor:float, serial_number:str, observacao:str):
     
-    self.nome = nome
-    self.valor = valor
-    self.serial_number = serial_number
-    self.observacao = observacao
+        self.nome = nome
+        self.valor = valor
+        self.serial_number = serial_number
+        self.observacao = observacao
     
      
