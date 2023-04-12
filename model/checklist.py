@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 
 class Checklist(Base):
-    __tablename__ = 'check-list'
+    __tablename__ = 'checklist'
     
     id = Column('pk_checklist', Integer, primary_key = True)
     nome = Column(String(140))

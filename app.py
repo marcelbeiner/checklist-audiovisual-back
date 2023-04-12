@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
 from flask import redirect
 
-# from model import Session, Checklist
+from model import Session, Checklist
 from schemas import *
 
 
@@ -16,7 +16,7 @@ def home():
     return redirect('/openapi')
 
 @app.post('/checklist')
-def add_checklist(form):
+def add_checklist(form: CheckListSchema):
     checklist = Checklist(
         nome = form.nome,
         valor = form.valor,
@@ -29,7 +29,7 @@ def add_checklist(form):
         session.add(checklist)
         session.commit()
         
-        return apresenta_checklist(checklist),200
+        return 200
     
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
