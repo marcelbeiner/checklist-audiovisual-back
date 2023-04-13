@@ -1,7 +1,7 @@
 from flask_openapi3 import OpenAPI, Info, Tag
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-from flask import redirect
+from flask import redirect, request
 
 from model import Session, Checklist
 from schemas import *
@@ -16,28 +16,52 @@ def home():
     return redirect('/openapi')
 
 @app.post('/checklist')
-def add_checklist(form: CheckListSchema):
+def add_checklist():
+    form_data = request.json
+    form = CheckListSchema(**form_data)
     checklist = Checklist(
         nome = form.nome,
         valor = form.valor,
         serial_number = form.serial_number,
         observacao = form.observacao
     )
-    
     try:
         session = Session()
         session.add(checklist)
         session.commit()
         
-        return 200
+        return apresenta_checklist(checklist), 200
+
     
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
-        error_msg = "Produto de mesmo nome já salvo na base :/"
-        return {"mesage": error_msg}, 409
+        error_msg = "Serial number de mesmo nome já salvo na base :"
+        return {"message": error_msg}, 409
 
     except Exception as e:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo item :/"
-        return {"mesage": error_msg}, 400
+        return {"message": error_msg}, 400
     
+@app.get('/checklists')
+def get_checklists():
+    session = Session()
+    checklists = session.query(Checklist).all()
+    if not checklists:
+        return {"checklists":[]}, 200
+    
+    else: 
+        print(checklists)
+        return apresenta_checklists(checklists), 200
+
+@app.get('/checklist')
+def get_checklist(query: ChecklistBuscaSchema):
+    produto_id = query.produto_id
+    session = Session()
+    checklist = session.query(Checklist).filter(Checklist.id == produto_id).first()
+    if not checklist:
+        return {"checklist":[]}, 200
+    
+    else: 
+        print(checklist)
+        return apresenta_checklist(checklist), 200
