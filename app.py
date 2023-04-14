@@ -56,12 +56,24 @@ def get_checklists():
 
 @app.get('/checklist')
 def get_checklist(query: ChecklistBuscaSchema):
-    produto_id = query.produto_id
+    checklist_id = query.checklist_id
     session = Session()
-    checklist = session.query(Checklist).filter(Checklist.id == produto_id).first()
+    checklist = session.query(Checklist).filter(Checklist.id == checklist_id).first()
     if not checklist:
         return {"checklist":[]}, 200
     
     else: 
         print(checklist)
         return apresenta_checklist(checklist), 200
+    
+@app.delete('/checklist')
+def del_checklist(query: ChecklistBuscaSchema):
+    checklist_id = query.checklist_id
+    session = Session()
+    checklist = session.query(Checklist).filter(Checklist.id == checklist_id).delete()
+    session.commit()
+    
+    if checklist:
+        return {"message":"O checklist foi removido","id":checklist_id}
+    else:
+        return {"message":"O checklist não foi encontrado"}
