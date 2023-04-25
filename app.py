@@ -9,7 +9,7 @@ from schemas import *
 
 info = Info(title = 'Checklist Audiovisual API', version = '1.0')
 app = OpenAPI(__name__, info = info)
-
+CORS(app)
 
 @app.get('/')
 def home():
@@ -54,7 +54,7 @@ def get_checklists():
         print(checklists)
         return apresenta_checklists(checklists), 200
 
-@app.get('/checklist')
+"""@app.get('/checklist')
 def get_checklist(query: ChecklistBuscaSchema):
     checklist_id = query.checklist_id
     session = Session()
@@ -64,7 +64,7 @@ def get_checklist(query: ChecklistBuscaSchema):
     
     else: 
         print(checklist)
-        return apresenta_checklist(checklist), 200
+        return apresenta_checklist(checklist), 200"""
     
 @app.delete('/checklist')
 def del_checklist(query: ChecklistBuscaSchema):

@@ -36,4 +36,4 @@ def apresenta_checklists(checklists: List[Checklist]):
             "observacao": checklist.observacao
         })
 
-    return {"produtos": result}
+    return {"checklists": result}
