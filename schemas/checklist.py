@@ -23,7 +23,7 @@ def apresenta_checklist(checklist: Checklist):
         'observacao': checklist.observacao
     }
 def apresenta_checklists(checklists: List[Checklist]):
-    """ Retorna uma representação do produto seguindo o schema definido em
+    """ Retorna uma representação dos equipamentos seguindo o schema definido em
         ProdutoViewSchema.
     """
     result = []

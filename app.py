@@ -13,10 +13,16 @@ CORS(app)
 
 @app.get('/')
 def home():
+    """Redireciona para /openapi, tela que permite a escolha do estilo de documentação.
+    """
     return redirect('/openapi')
 
 @app.post('/checklist')
 def add_checklist():
+    """Adiciona um novo equipamento à base de dados
+
+    Retorna uma representação dos equipamentos e comentários associados.
+    """
     form_data = request.json
     form = CheckListSchema(**form_data)
     checklist = Checklist(
@@ -68,6 +74,10 @@ def get_checklist(query: ChecklistBuscaSchema):
     
 @app.delete('/checklist')
 def del_checklist(query: ChecklistBuscaSchema):
+    """Deleta um Equipamento a partir do id informado
+
+    Retorna uma mensagem de confirmação da remoção.
+    """
     checklist_id = query.checklist_id
     session = Session()
     checklist = session.query(Checklist).filter(Checklist.id == checklist_id).delete()
