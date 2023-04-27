@@ -1,4 +1,4 @@
-## Instalação 
+## Instalação 🧰
 
 Requer o [Python 3](https://www.python.org/downloads/) instalado para rodar.
 
