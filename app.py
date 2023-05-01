@@ -18,13 +18,11 @@ def home():
     return redirect('/openapi')
 
 @app.post('/checklist')
-def add_checklist():
+def add_checklist(form: CheckListSchema):
     """Adiciona um novo equipamento à base de dados
 
     Retorna uma representação dos equipamentos e comentários associados.
     """
-    form_data = request.json
-    form = CheckListSchema(**form_data)
     checklist = Checklist(
         nome = form.nome,
         valor = form.valor,
@@ -35,10 +33,10 @@ def add_checklist():
         session = Session()
         session.add(checklist)
         session.commit()
-        
+
         return apresenta_checklist(checklist), 200
 
-    
+
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
         error_msg = "Serial number de mesmo nome já salvo na base :"
@@ -51,6 +49,9 @@ def add_checklist():
     
 @app.get('/checklists')
 def get_checklists():
+    """Apresenta a Checklist de equipamentos audiovisuais e respectivas informações.
+    """    
+    
     session = Session()
     checklists = session.query(Checklist).all()
     if not checklists:

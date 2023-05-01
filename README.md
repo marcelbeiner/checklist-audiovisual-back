@@ -9,4 +9,4 @@ Para usar localmente, siga estes passos:
 3. Ative o ambiente virtual executando `source venv/bin/activate`.
 4. Instale as dependências necessárias executando `pip install -r requirements.txt`.
 5. Inicie o servidor back-end executando `flask run` no terminal. Isso iniciará o servidor Flask em `http://localhost:5000`.
-6. Acesse a documentação da API navegando para `http://localhost:5000/swagger-ui` em seu navegador da web.
+6. Acesse a documentação da API navegando para `http://127.0.0.1:5000/openapi/swagger` em seu navegador da web.
